@@ -18,3 +18,19 @@ class vec:
     def len(self): return len(self.items)
     def __iter__(self): return self.items.__iter__()
     def append(self, x): return self.items.append(x)
+    
+
+class Block:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+
+    def move(self, dx, dy):
+        self.x += dx
+        self.y += dy
+        return self
+
+class Piece:
+    def __init__(self, x, y, board):
+        self.x, self.y = x, y
+        self.blocks = vec()
+        self.board = board
