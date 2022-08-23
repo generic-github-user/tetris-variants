@@ -1,6 +1,10 @@
 import time
 #import keyboard
 from pynput import keyboard
+from collections import namedtuple
+import operator
+import itertools
+import random
 
 #import curses
 #stdscr = curses.initscr()
@@ -77,3 +81,18 @@ class Board:
 
     def contains(self, x, y):
         return self.pieces.any(lambda p: p.contains(x, y))
+
+
+mboard = Board(11, 20)
+mboard.pieces.append(Piece.random(mboard, 3))
+
+#keyboard.add_hotkey('left', lambda: mboard.move('left'))
+#keyboard.add_hotkey('right', lambda: mboard.move('right'))
+
+for i in range(200):
+    mboard.step()
+    mboard.render()
+    #event = keyboard.read_event()
+
+
+    time.sleep(0.1)
