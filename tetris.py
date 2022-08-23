@@ -34,3 +34,20 @@ class Piece:
         self.x, self.y = x, y
         self.blocks = vec()
         self.board = board
+
+    def move(self, dx, dy):
+        #for b in self.blocks: b.move(dx, dy)
+        self.x += dx
+        self.y += dy
+        return self
+
+    def contains(self, x, y):
+        return self.blocks.any(lambda b: b.x == x and b.y == y)
+
+    def random(board, n=1):
+        r = Piece(board.width // 2, board.height, board)
+        r.blocks.append(Block(0, 0))
+        deltas = list(itertools.product(*[[-1, 0, 1]]*2))[1::2]
+        for i in range(n-1):
+            r.blocks.append(Block(*random.choice(deltas)))
+        return r
