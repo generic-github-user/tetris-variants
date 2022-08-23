@@ -51,3 +51,29 @@ class Piece:
         for i in range(n-1):
             r.blocks.append(Block(*random.choice(deltas)))
         return r
+
+class Board:
+    def __init__(self, w, h):
+        self.width, self.height = w, h
+        self.pieces = vec()
+
+    def render(self):
+        B = '-'*(self.width+2)*2
+        print(B)
+        for y in range(self.height, 0, -1):
+            print('| ', end='')
+            for x in range(0, self.width):
+                matches = self.pieces.any(lambda p: p.contains(x-p.x, y-p.y))
+                print(('##' if matches else '..'), end='')
+            print(' |')
+        print(B)
+        return self
+
+    def step(self):
+        for p in self.pieces:
+            x, y = p.x, p.y
+            if p.blocks.none(lambda b: self.contains(b.x+x, b.y+y-1) or b.y+y <= 1):
+                p.move(0, -1)
+
+    def contains(self, x, y):
+        return self.pieces.any(lambda p: p.contains(x, y))
